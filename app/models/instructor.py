@@ -12,15 +12,15 @@ class Instructor(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
-    last_name = db.Column(db.Integer)
-    hire_date = db.Column(db.Integer)
+    last_name = db.Column(db.String)
+    hire_date = db.Column(db.String)
 
     office_assignment = db.relationship(
         'OfficeAssignment',
     )
 
     course_assignments = db.relationship(
-        'Course',
+        'course_assignments',
         backref='course_assignments'
     )
 

@@ -7,14 +7,14 @@ class Department(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    budget = db.Column(db.Integer)
-    startDate = db.Column(db.Integer)
+    budget = db.Column(db.Numeric(8,2))
+    startDate = db.Column(db.DateTime)
     instructor_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     instructor = db.relationship(
         'Instructor',
     )
 
-    Courses = db.relationship(
+    courses = db.relationship(
         'Courses',
     )

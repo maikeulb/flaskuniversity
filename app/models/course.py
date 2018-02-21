@@ -8,7 +8,7 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
     credits = db.Column(db.Integer)
-    department_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
 
     department = db.relationship(
         'Department',
