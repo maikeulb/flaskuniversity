@@ -32,6 +32,6 @@ class Course(PaginatedAPIMixin, db.Model):
         return data
 
     def from_dict(self, data, new_user=False):
-        for field in ['title', 'credits']
+        for field in ['title', 'credits', 'department_id']
             if field in data:
                 setattr(self, field, data[field])

@@ -20,5 +20,3 @@ class PaginatedAPIMixin(object):
             }
         }
         return data
-
-
