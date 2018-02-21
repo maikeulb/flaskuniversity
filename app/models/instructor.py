@@ -1,11 +1,6 @@
 from app.extensions import db
 from datetime import datetime
 
-course_assignments = db.Table(
-    'course_assignments',
-    db.Column('instructor_id', db.Integer, db.ForeignKey('instructors.id')),
-    db.Column('course_id', db.Integer, db.ForeignKey('courses.id'))
-)
 
 class Instructor(db.Model):
     __tablename__ = 'instructors'
@@ -13,15 +8,14 @@ class Instructor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
-    hire_date = db.Column(db.String)
+    hire_date = db.Column(db.DateTime)
 
     office_assignment = db.relationship(
         'OfficeAssignment',
     )
 
     course_assignments = db.relationship(
-        'course_assignments',
-        backref='course_assignments'
+        'Course_Assignments',
     )
 
     courses = db.relationship(
