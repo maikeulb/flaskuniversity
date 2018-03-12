@@ -9,7 +9,7 @@ class Department(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     budget = db.Column(db.Numeric(8,2))
-    startDate = db.Column(db.DateTime)
+    start_date = db.Column(db.DateTime)
     instructor_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     instructor = db.relationship(

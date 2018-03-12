@@ -1,7 +1,7 @@
 from flask import jsonify, request, url_for
 from app import db
-from app.models import User
-from app.api import bp
+from app.models import Student
+from app.api import api
 from app.api.errors import bad_request
 
 
