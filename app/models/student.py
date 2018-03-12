@@ -15,5 +15,6 @@ class Student(db.Model):
     enrollments = db.relationship(
         'Enrollment',
     )
-    
-    def full_name => last_name + "," first_name
+
+    def full_name(self):
+        return '%s %s' % (self.first_name, self.last_name)

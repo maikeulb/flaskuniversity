@@ -20,11 +20,11 @@ class Instructor(PaginatedAPIMixin, db.Model):
     courses = db.relationship(
         'Course',
     )
-    
+
     @property
     def full_name(self):
         return '{0}, {1}'.format(self.last_name.title(),
-                                         self.first_name.title())
+                                 self.first_name.title())
 
     def to_dict(self, include_email=False):
         data = {
