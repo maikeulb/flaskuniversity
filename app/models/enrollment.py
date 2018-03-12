@@ -21,14 +21,16 @@ class Enrollment(PaginatedAPIMixin, db.Model):
     def to_dict(self, include_email=False):
         data = {
             'id': self.id,
-            'grade': self.last_seen.isoformat() + 'Z',
+            'course_id': self.course_id,
+            'student_id': self.student_id,
+            'grade': self.grade,
             '_links': {
                 'self': url_for('api.get_enrollment', id=self.id),
             }
         }
         return data
 
-    def from_dict(self, data, new_user=False):
-        for field in ['grade']
+    def from_dict(self, data)
+        for field in ['course_id, student_id, grade']
             if field in data:
                 setattr(self, field, data[field])

@@ -11,3 +11,19 @@ class OfficeAssignment(db.Model):
     instructor = db.relationship(
         'Instructor',
     )
+
+    def to_dict(self, include_email=False):
+        data = {
+            'id': self.id,
+            'location': self.location,
+            'instructor_id': self.instructor_id,
+            '_links': {
+                'self': url_for('api.get_instructor', id=self.id),
+            }
+        }
+        return data
+
+    def from_dict(self, data, new_user=False):
+        for field in ['location', 'instructor_id']
+            if field in data:
+                setattr(self, field, data[field])

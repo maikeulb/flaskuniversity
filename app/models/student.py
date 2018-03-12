@@ -18,3 +18,20 @@ class Student(db.Model):
 
     def full_name(self):
         return '%s %s' % (self.first_name, self.last_name)
+
+    def to_dict(self, include_email=False):
+        data = {
+            'id': self.id,
+            'first_name': self.first_name,
+            'last_name': self.last_seen,
+            'hire_date': self.hire_date,
+            '_links': {
+                'self': url_for('api.get_instructor', id=self.id),
+            }
+        }
+        return data
+
+    def from_dict(self, data, new_user=False):
+        for field in ['first_name', 'last_name', 'hire_date']
+            if field in data:
+                setattr(self, field, data[field])

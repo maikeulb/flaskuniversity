@@ -23,9 +23,9 @@ class Department(PaginatedAPIMixin, db.Model):
     def to_dict(self, include_email=False):
         data = {
             'id': self.id,
-            'name': self.username,
-            'budget': self.last_seen.isoformat() + 'Z',
-            'startDate': self.last_seen.isoformat() + 'Z',
+            'name': self.name,
+            'budget': self.budget,
+            'start_date': self.start_date,
             '_links': {
                 'self': url_for('api.get_department', id=self.id),
             }
@@ -33,6 +33,6 @@ class Department(PaginatedAPIMixin, db.Model):
         return data
 
     def from_dict(self, data, new_user=False):
-        for field in ['name', 'budget', 'startDate']
+        for field in ['name', 'budget', 'start_date']
             if field in data:
                 setattr(self, field, data[field])

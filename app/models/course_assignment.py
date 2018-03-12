@@ -14,3 +14,18 @@ class CourseAssignment(db.Model):
     course= db.relationship(
         'Course',
     )
+
+    def to_dict(self):
+        data = {
+            'instructor_id': self.instructor_id,
+            'course_id': self.course_id,
+            '_links': {
+                'self': url_for('api.get_customer', id=self.id),
+            }
+        }
+        return data
+
+    def from_dict(self, data, new_user=False):
+        for field in ['instructor_id', 'course_id']
+            if field in data:
+                setattr(self, field, data[field])

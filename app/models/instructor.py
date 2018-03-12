@@ -29,8 +29,9 @@ class Instructor(PaginatedAPIMixin, db.Model):
     def to_dict(self, include_email=False):
         data = {
             'id': self.id,
-            'first_name': self.username,
-            'last_name': self.last_seen.isoformat() + 'Z',
+            'first_name': self.first_name,
+            'last_name': self.last_seen,
+            'hire_date': self.hire_date,
             '_links': {
                 'self': url_for('api.get_instructor', id=self.id),
             }

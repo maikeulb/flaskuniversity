@@ -20,11 +20,12 @@ class Course(PaginatedAPIMixin, db.Model):
         'CourseAssignment',
     )
 
-    def to_dict(self, include_email=False):
+    def to_dict(self):
         data = {
             'id': self.id,
-            'title': self.username,
-            'credits': self.last_seen.isoformat() + 'Z',
+            'title': self.title,
+            'credits': self.credits,
+            'department_id': self.department_id,
             '_links': {
                 'self': url_for('api.get_customer', id=self.id),
             }
