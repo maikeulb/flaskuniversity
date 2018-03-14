@@ -12,7 +12,7 @@ class OfficeAssignment(db.Model):
         'Instructor',
     )
 
-    def to_dict(self, include_email=False):
+    def to_dict(self):
         data = {
             'id': self.id,
             'location': self.location,
@@ -23,7 +23,7 @@ class OfficeAssignment(db.Model):
         }
         return data
 
-    def from_dict(self, data, new_user=False):
-        for field in ['location', 'instructor_id']
+    def from_dict(self, data):
+        for field in ['location', 'instructor_id']:
             if field in data:
                 setattr(self, field, data[field])

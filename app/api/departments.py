@@ -1,5 +1,5 @@
 from flask import jsonify, request, url_for
-from app import db
+from app.extensions import db
 from app.models import Department
 from app.api import api
 from app.api.errors import bad_request
@@ -23,8 +23,8 @@ def get_department(id):
 @api.route('/departments', methods=['POST'])
 def create_department():
     data = request.get_json() or {}
-    if 'name' not in data or 'budget' not in data or 'budget' not in data or
-    'start_date' not in data or 'instructor_id' not in data:
+    if 'name' not in data or 'budget' not in data or 'budget' not in data or \
+            'start_date' not in data or 'instructor_id' not in data:
         return bad_request('must include first_name, last_name and \
                            enrollment_date fields')
     department = Department()
@@ -34,7 +34,7 @@ def create_department():
     return jsonify(department.to_dict()), 201
 
 
-@bp.route('/departments/<int:id>', methods=['PUT'])
+@api.route('/departments/<int:id>', methods=['PUT'])
 def update_department(id):
     department = Department.query.get_or_404(id)
     data = request.get_json() or {}
@@ -44,7 +44,7 @@ def update_department(id):
     return '', 204
 
 
-@bp.route('/departments/<int:id>', methods=['DELETE'])
+@api.route('/departments/<int:id>', methods=['DELETE'])
 def delete_department(id):
     department = Department.query.get_or_404(id)
     db.session.delete(department)

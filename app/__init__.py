@@ -30,7 +30,6 @@ def register_extensions(app):
     csrf_protect.init_app(app)
     login.init_app(app)
     migrate.init_app(app, db)
-    moment.init_app(app)
     return None
 
 

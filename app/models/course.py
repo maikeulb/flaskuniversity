@@ -1,5 +1,5 @@
 from app.extensions import db
-from app.api.mixins import PaginatedAPIMixin
+from .mixins import PaginatedAPIMixin
 
 
 class Course(PaginatedAPIMixin, db.Model):
@@ -32,7 +32,7 @@ class Course(PaginatedAPIMixin, db.Model):
         }
         return data
 
-    def from_dict(self, data, new_user=False):
-        for field in ['title', 'credits', 'department_id']
+    def from_dict(self, data):
+        for field in ['title', 'credits', 'department_id']:
             if field in data:
                 setattr(self, field, data[field])

@@ -1,5 +1,5 @@
 from flask import jsonify, request, url_for
-from app import db
+from app.extensions import db
 from app.models import Course
 from app.api import api
 from app.api.errors import bad_request
@@ -23,8 +23,7 @@ def get_course(id):
 @api.route('/courses', methods=['POST'])
 def create_course():
     data = request.get_json() or {}
-    if 'course_id' not in data or 'title' not in data or 'credits' not in data
-    'deparment_id' not in data:
+    if 'course_id' not in data or 'title' not in data or 'credits' not in data:
         return bad_request('must include course_id, title, credits, and \
         department_id')
     course = Course()

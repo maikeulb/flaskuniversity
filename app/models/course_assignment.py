@@ -1,8 +1,12 @@
 from app.extensions import db
+from sqlalchemy import PrimaryKeyConstraint
 
 
 class CourseAssignment(db.Model):
     __tablename__ = 'course_assignments'
+    __table_args__ = (
+        PrimaryKeyConstraint('instructor_id', 'course_id'),
+    )
 
     instructor_id = db.Column(db.Integer, db.ForeignKey('instructors.id'))
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
@@ -11,7 +15,7 @@ class CourseAssignment(db.Model):
         'Instructor',
     )
 
-    course= db.relationship(
+    course = db.relationship(
         'Course',
     )
 
@@ -25,7 +29,7 @@ class CourseAssignment(db.Model):
         }
         return data
 
-    def from_dict(self, data, new_user=False):
-        for field in ['instructor_id', 'course_id']
+    def from_dict(self, data):
+        for field in ['instructor_id', 'course_id']:
             if field in data:
                 setattr(self, field, data[field])

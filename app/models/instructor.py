@@ -1,6 +1,6 @@
 from app.extensions import db
 from datetime import datetime
-from app.api.mixins import PaginatedAPIMixin
+from .mixins import PaginatedAPIMixin
 
 
 class Instructor(PaginatedAPIMixin, db.Model):
@@ -26,7 +26,7 @@ class Instructor(PaginatedAPIMixin, db.Model):
         return '{0}, {1}'.format(self.last_name.title(),
                                  self.first_name.title())
 
-    def to_dict(self, include_email=False):
+    def to_dict(self):
         data = {
             'id': self.id,
             'first_name': self.first_name,
@@ -38,7 +38,7 @@ class Instructor(PaginatedAPIMixin, db.Model):
         }
         return data
 
-    def from_dict(self, data, new_user=False):
-        for field in ['first_name', 'last_name', 'hire_date']
+    def from_dict(self, data):
+        for field in ['first_name', 'last_name', 'hire_date']:
             if field in data:
                 setattr(self, field, data[field])

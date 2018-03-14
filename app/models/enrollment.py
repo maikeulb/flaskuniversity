@@ -1,6 +1,6 @@
 from app.extensions import db
 from sqlalchemy.dialects.postgresql import ENUM
-from app.api.mixins import PaginatedAPIMixin
+from .mixins import PaginatedAPIMixin
 
 class Enrollment(PaginatedAPIMixin, db.Model):
     __tablename__ = 'enrollments'
@@ -18,7 +18,7 @@ class Enrollment(PaginatedAPIMixin, db.Model):
         'Student',
     )
 
-    def to_dict(self, include_email=False):
+    def to_dict(self):
         data = {
             'id': self.id,
             'course_id': self.course_id,
@@ -30,7 +30,7 @@ class Enrollment(PaginatedAPIMixin, db.Model):
         }
         return data
 
-    def from_dict(self, data)
-        for field in ['course_id, student_id, grade']
+    def from_dict(self, data):
+        for field in ['course_id, student_id, grade']:
             if field in data:
                 setattr(self, field, data[field])

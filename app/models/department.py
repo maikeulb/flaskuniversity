@@ -1,6 +1,6 @@
 from app.extensions import db
 from datetime import datetime
-from app.api.mixins import PaginatedAPIMixin
+from .mixins import PaginatedAPIMixin
 
 
 class Department(PaginatedAPIMixin, db.Model):
@@ -8,9 +8,9 @@ class Department(PaginatedAPIMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
-    budget = db.Column(db.Numeric(8,2))
+    budget = db.Column(db.Numeric(8, 2))
     start_date = db.Column(db.DateTime)
-    instructor_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    instructor_id = db.Column(db.Integer, db.ForeignKey('instructors.id'))
 
     instructor = db.relationship(
         'Instructor',
@@ -20,7 +20,7 @@ class Department(PaginatedAPIMixin, db.Model):
         'Courses',
     )
 
-    def to_dict(self, include_email=False):
+    def to_dict(self):
         data = {
             'id': self.id,
             'name': self.name,
@@ -32,7 +32,7 @@ class Department(PaginatedAPIMixin, db.Model):
         }
         return data
 
-    def from_dict(self, data, new_user=False):
-        for field in ['name', 'budget', 'start_date']
+    def from_dict(self, data):
+        for field in ['name', 'budget', 'start_date']:
             if field in data:
                 setattr(self, field, data[field])

@@ -42,7 +42,7 @@ class User(UserMixin, PaginatedAPIMixin, db.Model):
             return
         return User.query.get(id)
 
-    def to_dict(self, include_email=False):
+    def to_dict(self):
         data = {
             'id': self.id,
             'username': self.username,
@@ -54,7 +54,7 @@ class User(UserMixin, PaginatedAPIMixin, db.Model):
             data['email'] = self.email
         return data
 
-    def from_dict(self, data, new_user=False):
+    def from_dict(self, data):
         for field in ['username', 'email']:
             if field in data:
                 setattr(self, field, data[field])

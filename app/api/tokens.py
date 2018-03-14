@@ -1,6 +1,6 @@
 from flask import jsonify, g
-from app import db
-from app.api import bp
+from app.extensions import db
+from app.api import api
 from app.api.auth import basic_auth, token_auth
 
 

@@ -1,5 +1,5 @@
 from flask import jsonify, request, url_for
-from app import db
+from app.extensions import db
 from app.models import Instructor
 from app.api import api
 from app.api.errors import bad_request
@@ -33,7 +33,7 @@ def create_instructor():
     return jsonify(department.to_dict()), 201
 
 
-@bp.route('/instructors/<int:id>', methods=['PUT'])
+@api.route('/instructors/<int:id>', methods=['PUT'])
 def update_instructor(id):
     instructor = Instructor.query.get_or_404(id)
     data = request.get_json() or {}
@@ -42,7 +42,7 @@ def update_instructor(id):
     return '', 204
 
 
-@bp.route('/instructors/<int:id>', methods=['DELETE'])
+@api.route('/instructors/<int:id>', methods=['DELETE'])
 def delete_instructor(id):
     instructor = Instructor.query.get_or_404(id)
     db.session.delete(instructor)

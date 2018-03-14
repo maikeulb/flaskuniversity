@@ -1,5 +1,5 @@
 from flask import jsonify, request, url_for
-from app import db
+from app.extensions import db
 from app.models import User
 from app.api import api
 from app.api.auth import token_auth
