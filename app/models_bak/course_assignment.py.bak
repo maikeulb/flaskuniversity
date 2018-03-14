@@ -1,5 +1,7 @@
 from app.extensions import db
 from sqlalchemy import PrimaryKeyConstraint
+from app.models.instructor import Instructor
+from app.models.course import Course
 
 
 class CourseAssignment(db.Model):

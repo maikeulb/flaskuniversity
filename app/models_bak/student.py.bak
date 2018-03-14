@@ -1,5 +1,6 @@
 from app.extensions import db
 from datetime import datetime
+from app.models.enrollment import Enrollment
 
 
 class Student(db.Model):

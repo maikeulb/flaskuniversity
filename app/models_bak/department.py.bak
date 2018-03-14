@@ -1,6 +1,8 @@
 from app.extensions import db
 from datetime import datetime
 from .mixins import PaginatedAPIMixin
+from app.models.instructor import Instructor
+from app.models.course import Course
 
 
 class Department(PaginatedAPIMixin, db.Model):

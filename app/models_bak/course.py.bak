@@ -1,5 +1,8 @@
 from app.extensions import db
 from .mixins import PaginatedAPIMixin
+from app.models.department import Department
+from app.models.enrollment import Enrollment
+from app.models.course_assignment import CourseAssignment
 
 
 class Course(PaginatedAPIMixin, db.Model):
