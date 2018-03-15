@@ -31,7 +31,11 @@ def create_department():
     department.from_dict(data)
     db.session.add(department)
     db.session.commit()
-    return jsonify(department.to_dict()), 201
+    response = jsonify(department.to_dict())
+    response.status_code = 201
+    response.headers['Location'] = url_for(
+        'api.get_department', id=department.id)
+    return response
 
 
 @api.route('/departments/<int:id>', methods=['PUT'])
@@ -40,7 +44,6 @@ def update_department(id):
     data = request.get_json() or {}
     department.from_dict(data)
     db.session.commit()
-    response.status_code = 204
     return '', 204
 
 

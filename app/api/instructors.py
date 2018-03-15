@@ -11,7 +11,7 @@ def get_instructors():
     per_page = min(request.args.get('per_page', 10, type=int), 100)
     data = Instructor.to_collection_dict(Instructor.query, page, per_page,
                                          'api.get_instructors')
-    return jsonify(data)
+    return jsonify(data), 200
 
 
 @api.route('/instructors/<int:id>/', methods=['GET'])
@@ -30,7 +30,11 @@ def create_instructor():
     instructor.from_dict(data)
     db.session.add(instructor)
     db.session.commit()
-    return jsonify(department.to_dict()), 201
+    response = jsonify(instructor.to_dict())
+    response.status_code = 201
+    response.headers['Location'] = url_for(
+        'api.get_department', id=instructor.id)
+    return response
 
 
 @api.route('/instructors/<int:id>', methods=['PUT'])

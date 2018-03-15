@@ -30,7 +30,10 @@ def create_course():
     course.from_dict(data)
     db.session.add(course)
     db.session.commit()
-    return jsonify(course.to_dict()), 201
+    response = jsonify(course.to_dict())
+    response.status_code = 201
+    response.headers['Location'] = url_for('api.get_course', id=course.id)
+    return response
 
 
 @api.route('/courses/<int:id>', methods=['PUT'])
