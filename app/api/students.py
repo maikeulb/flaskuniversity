@@ -27,7 +27,7 @@ def create_student():
         return bad_request('must include first_name, last_name and \
                            enrollment_date fields')
     student = Student()
-    student.from_dict(data, new_user=True)
+    student.from_dict(data)
     db.session.add(student)
     db.session.commit()
     response = jsonify(student.to_dict())

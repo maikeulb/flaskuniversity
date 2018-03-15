@@ -1,12 +1,11 @@
 import base64
-from datetime import datetime, timedelta
 import os
-from time import time
-from flask import current_app, url_for
-from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
-from app import db, login
+from app.extensions import db
+from flask import current_app, url_for
+from datetime import datetime, timedelta
+from time import time
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class PaginatedAPIMixin(object):
@@ -33,7 +32,7 @@ class PaginatedAPIMixin(object):
         return data
 
 
-class User(UserMixin, PaginatedAPIMixin, db.Model):
+class User(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -70,11 +69,9 @@ class User(UserMixin, PaginatedAPIMixin, db.Model):
                 'self': url_for('api.get_user', id=self.id),
             }
         }
-        if include_email:
-            data['email'] = self.email
         return data
 
-    def from_dict(self, data):
+    def from_dict(self, data, new_user=False):
         for field in ['username', 'email']:
             if field in data:
                 setattr(self, field, data[field])
@@ -99,8 +96,3 @@ class User(UserMixin, PaginatedAPIMixin, db.Model):
         if user is None or user.token_expiration < datetime.utcnow():
             return None
         return user
-
-
-@login.user_loader
-def load_user(id):
-    return User.query.get(int(id))

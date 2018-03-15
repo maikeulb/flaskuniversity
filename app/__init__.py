@@ -9,7 +9,6 @@ from app.api import api as api_bp
 from app.errors import errors as error_bp
 from app.extensions import (
     bcrypt,
-    csrf_protect,
     db,
     login,
     migrate,
@@ -27,7 +26,6 @@ def create_app(config_class):
 def register_extensions(app):
     bcrypt.init_app(app)
     db.init_app(app)
-    csrf_protect.init_app(app)
     login.init_app(app)
     migrate.init_app(app, db)
     return None
