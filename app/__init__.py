@@ -6,6 +6,7 @@ from flask import (
     request,
     current_app)
 from app.api import api as api_bp
+from app.errors import errors as error_bp
 from app.extensions import (
     bcrypt,
     csrf_protect,
@@ -20,7 +21,6 @@ def create_app(config_class):
     app.config.from_object(config_class)
     register_blueprints(app)
     register_extensions(app)
-    register_errorhandlers(app)
     return app
 
 
@@ -35,13 +35,5 @@ def register_extensions(app):
 
 def register_blueprints(app):
     app.register_blueprint(api_bp, url_prefix='/api')
-    return None
-
-
-def register_errorhandlers(app):
-    def render_error(error):
-        error_code = getattr(error, 'code', 500)
-        return render_template('errors/{0}.html'.format(error_code)), error_code
-    for errcode in [401, 404, 500]:
-        app.errorhandler(errcode)(render_error)
+    app.register_blueprint(error_bp, url_prefix='/errors')
     return None
