@@ -11,13 +11,13 @@ def get_courses():
     per_page = min(request.args.get('per_page', 10, type=int), 100)
     data = Course.to_collection_dict(Course.query, page, per_page,
                                      'api.get_courses')
-    return jsonify(data), 200
+    return jsonify(data)
 
 
-@api.route('/courses/<int:id>/', methods=['GET'])
+@api.route('/courses/<int:id>', methods=['GET'])
 def get_course(id):
     course = Course.query.get_or_404(id)
-    return jsonify(course.to_dict()), 200
+    return jsonify(course.to_dict())
 
 
 @api.route('/courses', methods=['POST'])

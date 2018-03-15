@@ -13,7 +13,7 @@ def get_users():
     per_page = min(request.args.get('per_page', 10, type=int), 100)
     data = User.to_collection_dict(User.query, page, per_page,
                                    'api.get_users')
-    return jsonify(data), 200
+    return jsonify(data)
 
 
 @api.route('/users/<int:id>', methods=['GET'])
@@ -54,4 +54,4 @@ def update_user(id):
         return bad_request('please use a different email address')
     user.from_dict(request.get_json() or {}, new_user=False)
     db.session.commit()
-    return jsonify(user.to_dict())
+    return '', 204

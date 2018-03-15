@@ -11,13 +11,13 @@ def get_departments():
     per_page = min(request.args.get('per_page', 10, type=int), 100)
     data = Department.to_collection_dict(Department.query, page, per_page,
                                          'api.get_departments')
-    return jsonify(data), 200
+    return jsonify(data)
 
 
-@api.route('/departments/<int:id>/', methods=['GET'])
+@api.route('/departments/<int:id>', methods=['GET'])
 def get_department(id):
     department = Department.query.get_or_404(id)
-    return jsonify(department.to_dict()), 200
+    return jsonify(department.to_dict())
 
 
 @api.route('/departments', methods=['POST'])

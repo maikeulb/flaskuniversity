@@ -11,13 +11,13 @@ def get_students():
     per_page = min(request.args.get('per_page', 10, type=int), 100)
     data = Student.to_collection_dict(Student.query, page, per_page,
                                       'api.get_students')
-    return jsonify(data), 200
+    return jsonify(data)
 
 
-@api.route('/students/<int:id>/', methods=['GET'])
+@api.route('/students/<int:id>', methods=['GET'])
 def get_student(id):
     student = Student.query.get_or_404(id)
-    return jsonify(student.to_dict()), 200
+    return jsonify(student.to_dict())
 
 
 @api.route('/students', methods=['POST'])

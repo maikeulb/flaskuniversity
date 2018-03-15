@@ -11,13 +11,13 @@ def get_instructors():
     per_page = min(request.args.get('per_page', 10, type=int), 100)
     data = Instructor.to_collection_dict(Instructor.query, page, per_page,
                                          'api.get_instructors')
-    return jsonify(data), 200
+    return jsonify(data)
 
 
-@api.route('/instructors/<int:id>/', methods=['GET'])
+@api.route('/instructors/<int:id>', methods=['GET'])
 def get_instructor(id):
     instructor = Instructor.query.get_or_404(id)
-    return jsonify(instructor.to_dict()), 200
+    return jsonify(instructor.to_dict())
 
 
 @api.route('/instructors', methods=['POST'])
