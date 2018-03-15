@@ -34,10 +34,8 @@ class Student(PaginatedAPIMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
-    last_name = db.Column(db.Integer)
-    enrollment_date = db.Column(db.Integer)
-    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
-    student_id = db.Column(db.Integer, db.ForeignKey('students.id'))
+    last_name = db.Column(db.String)
+    enrollment_date = db.Column(db.Date)
 
     enrollments = db.relationship(
         'Enrollment',
@@ -50,16 +48,16 @@ class Student(PaginatedAPIMixin, db.Model):
         data = {
             'id': self.id,
             'first_name': self.first_name,
-            'last_name': self.last_seen,
-            'hire_date': self.hire_date,
+            'last_name': self.last_name,
+            'enrollment_date': self.enrollment_date,
             '_links': {
-                'self': url_for('api.get_instructor', id=self.id),
+                'self': url_for('api.get_student', id=self.id),
             }
         }
         return data
 
     def from_dict(self, data):
-        for field in ['first_name', 'last_name', 'hire_date']:
+        for field in ['first_name', 'last_name', 'enrollment_date']:
             if field in data:
                 setattr(self, field, data[field])
 
@@ -89,7 +87,7 @@ class Course(PaginatedAPIMixin, db.Model):
             'credits': self.credits,
             'department_id': self.department_id,
             '_links': {
-                'self': url_for('api.get_customer', id=self.id),
+                'self': url_for('api.get_course', id=self.id),
             }
         }
         return data
@@ -106,7 +104,7 @@ class Instructor(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
-    hire_date = db.Column(db.DateTime)
+    hire_date = db.Column(db.Date)
 
     office_assignment = db.relationship(
         'OfficeAssignment',
@@ -124,7 +122,7 @@ class Instructor(PaginatedAPIMixin, db.Model):
         data = {
             'id': self.id,
             'first_name': self.first_name,
-            'last_name': self.last_seen,
+            'last_name': self.last_name,
             'hire_date': self.hire_date,
             '_links': {
                 'self': url_for('api.get_instructor', id=self.id),
@@ -160,7 +158,7 @@ class CourseAssignment(PaginatedAPIMixin, db.Model):
             'instructor_id': self.instructor_id,
             'course_id': self.course_id,
             '_links': {
-                'self': url_for('api.get_customer', id=self.id),
+                'self': url_for('api.get_course_assignment', id=self.id),
             }
         }
         return data
@@ -174,7 +172,7 @@ class CourseAssignment(PaginatedAPIMixin, db.Model):
 class OfficeAssignment(PaginatedAPIMixin, db.Model):
     __tablename__ = 'office_assignments'
 
-    location = db.Column(db.Integer, primary_key=True)
+    location = db.Column(db.String, primary_key=True)
     instructor_id = db.Column(db.Integer, db.ForeignKey('instructors.id'))
 
     instructor = db.relationship(
@@ -187,7 +185,7 @@ class OfficeAssignment(PaginatedAPIMixin, db.Model):
             'location': self.location,
             'instructor_id': self.instructor_id,
             '_links': {
-                'self': url_for('api.get_instructor', id=self.id),
+                'self': url_for('api.get_office_assignment', id=self.id),
             }
         }
         return data
@@ -204,7 +202,7 @@ class Department(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     budget = db.Column(db.Numeric(8, 2))
-    start_date = db.Column(db.DateTime)
+    start_date = db.Column(db.Date)
     instructor_id = db.Column(db.Integer, db.ForeignKey('instructors.id'))
 
     instructor = db.relationship(
