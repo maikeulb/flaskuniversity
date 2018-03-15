@@ -3,6 +3,7 @@ from app.extensions import db
 from app.models import Department
 from app.api import api
 from app.api.errors import bad_request
+from app.api.auth import token_auth
 
 
 @api.route('/departments', methods=['GET'])
@@ -21,6 +22,7 @@ def get_department(id):
 
 
 @api.route('/departments', methods=['POST'])
+@token_auth.login_required
 def create_department():
     data = request.get_json() or {}
     if 'name' not in data or 'budget' not in data or 'budget' not in data or \
@@ -39,6 +41,7 @@ def create_department():
 
 
 @api.route('/departments/<int:id>', methods=['PUT'])
+@token_auth.login_required
 def update_department(id):
     department = Department.query.get_or_404(id)
     data = request.get_json() or {}
@@ -48,6 +51,7 @@ def update_department(id):
 
 
 @api.route('/departments/<int:id>', methods=['DELETE'])
+@token_auth.login_required
 def delete_department(id):
     department = Department.query.get_or_404(id)
     db.session.delete(department)

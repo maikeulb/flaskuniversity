@@ -3,6 +3,7 @@ from app.extensions import db
 from app.models import Student
 from app.api import api
 from app.api.errors import bad_request
+from app.api.auth import token_auth
 
 
 @api.route('/students', methods=['GET'])
@@ -21,6 +22,7 @@ def get_student(id):
 
 
 @api.route('/students', methods=['POST'])
+@token_auth.login_required
 def create_student():
     data = request.get_json() or {}
     if 'first_name' not in data or 'last_name' not in data or 'enrollment_date' not in data:
@@ -37,6 +39,7 @@ def create_student():
 
 
 @api.route('/students/<int:id>', methods=['PUT'])
+@token_auth.login_required
 def update_student(id):
     student = Student.query.get_or_404(id)
     data = request.get_json() or {}
@@ -46,6 +49,7 @@ def update_student(id):
 
 
 @api.route('/students/<int:id>', methods=['DELETE'])
+@token_auth.login_required
 def delete_student(id):
     student = Student.query.get_or_404(id)
     db.session.delete(student)

@@ -3,6 +3,7 @@ from app.extensions import db
 from app.models import Course
 from app.api import api
 from app.api.errors import bad_request
+from app.api.auth import token_auth
 
 
 @api.route('/courses', methods=['GET'])
@@ -21,6 +22,7 @@ def get_course(id):
 
 
 @api.route('/courses', methods=['POST'])
+@token_auth.login_required
 def create_course():
     data = request.get_json() or {}
     if 'course_id' not in data or 'title' not in data or 'credits' not in data:
@@ -37,6 +39,7 @@ def create_course():
 
 
 @api.route('/courses/<int:id>', methods=['PUT'])
+@token_auth.login_required
 def update_course(id):
     course = Course.query.get_or_404(id)
     data = request.get_json() or {}
@@ -46,6 +49,7 @@ def update_course(id):
 
 
 @api.route('/courses/<int:id>', methods=['DELETE'])
+@token_auth.login_required
 def delete_course(id):
     course = Course.query.get_or_404(id)
     db.session.delete(course)

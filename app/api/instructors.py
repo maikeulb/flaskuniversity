@@ -3,6 +3,7 @@ from app.extensions import db
 from app.models import Instructor
 from app.api import api
 from app.api.errors import bad_request
+from app.api.auth import token_auth
 
 
 @api.route('/instructors', methods=['GET'])
@@ -15,12 +16,14 @@ def get_instructors():
 
 
 @api.route('/instructors/<int:id>', methods=['GET'])
+@token_auth.login_required
 def get_instructor(id):
     instructor = Instructor.query.get_or_404(id)
     return jsonify(instructor.to_dict())
 
 
 @api.route('/instructors', methods=['POST'])
+@token_auth.login_required
 def create_instructor():
     data = request.get_json() or {}
     if 'first_name' not in data or 'last_name' not in data or 'enrollment_date' not in data:
@@ -38,6 +41,7 @@ def create_instructor():
 
 
 @api.route('/instructors/<int:id>', methods=['PUT'])
+@token_auth.login_required
 def update_instructor(id):
     instructor = Instructor.query.get_or_404(id)
     data = request.get_json() or {}
