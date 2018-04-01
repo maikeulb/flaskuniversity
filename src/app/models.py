@@ -93,7 +93,7 @@ class Course(PaginatedAPIMixin, db.Model):
         return data
 
     def from_dict(self, data):
-        for field in ['title', 'credits', 'department_id']:
+        for field in ['id', 'title', 'credits', 'department_id']:
             if field in data:
                 setattr(self, field, data[field])
 

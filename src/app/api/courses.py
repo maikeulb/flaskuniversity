@@ -25,8 +25,8 @@ def get_course(id):
 @token_auth.login_required
 def create_course():
     data = request.get_json() or {}
-    if 'course_id' not in data or 'title' not in data or 'credits' not in data:
-        return bad_request('must include course_id, title, credits, and \
+    if 'id' not in data or 'title' not in data or 'credits' not in data:
+        return bad_request('must include id, title, credits, and \
         department_id')
     course = Course()
     course.from_dict(data)
@@ -43,6 +43,9 @@ def create_course():
 def update_course(id):
     course = Course.query.get_or_404(id)
     data = request.get_json() or {}
+    if 'id' not in data or 'title' not in data or 'credits' not in data:
+        return bad_request('must include id, title, credits, and \
+        department_id')
     course.from_dict(data)
     db.session.commit()
     return '', 204
