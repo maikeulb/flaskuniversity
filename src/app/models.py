@@ -35,7 +35,7 @@ class Student(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
-    enrollment_date = db.Column(db.Date)
+    enrollment_date = db.Column(db.Date, nullable=True)
 
     enrollments = db.relationship(
         'Enrollment',
@@ -104,7 +104,7 @@ class Instructor(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
-    hire_date = db.Column(db.Date)
+    hire_date = db.Column(db.Date, nullable=True)
 
     office_assignment = db.relationship(
         'OfficeAssignment',
@@ -202,7 +202,7 @@ class Department(PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     budget = db.Column(db.Numeric(8, 2))
-    start_date = db.Column(db.Date)
+    start_date = db.Column(db.Date, nullable=True)
     instructor_id = db.Column(db.Integer, db.ForeignKey('instructors.id'))
 
     instructor = db.relationship(
