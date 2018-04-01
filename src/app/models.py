@@ -217,6 +217,7 @@ class Department(PaginatedAPIMixin, db.Model):
             'id': self.id,
             'name': self.name,
             'budget': self.budget,
+            'instructor_id': self.instructor_id,
             'start_date': self.start_date,
             '_links': {
                 'self': url_for('api.get_department', id=self.id),
@@ -225,7 +226,7 @@ class Department(PaginatedAPIMixin, db.Model):
         return data
 
     def from_dict(self, data):
-        for field in ['name', 'budget', 'start_date']:
+        for field in ['name', 'budget', 'start_date', 'instructor_id']:
             if field in data:
                 setattr(self, field, data[field])
 

@@ -35,7 +35,10 @@ class TestCourses:
     def test_get_course(self, testapp):
         resp = _get_course(testapp, 221)
         assert resp.status_code == 200
-        assert resp.json['id'] == 221
+        assert resp.json['id'] is not None
+        assert resp.json['title'] is not None
+        assert resp.json['credits'] is not None
+        assert resp.json['department_id'] is not None
 
     def test_create_course(self, testapp):
         _register_user(testapp)

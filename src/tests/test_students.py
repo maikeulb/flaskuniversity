@@ -36,6 +36,8 @@ class TestStudents:
         resp = _get_student(testapp, 1)
         assert resp.status_code == 200
         assert resp.json['id'] == 1
+        assert resp.json['first_name'] is not None
+        assert resp.json['last_name'] is not None
 
     def test_create_student(self, testapp):
         _register_user(testapp)

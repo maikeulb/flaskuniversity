@@ -10,134 +10,146 @@ def _register_user(testapp, **kwargs):
         "password": "P@ssw0rd!"
     }, **kwargs)
 
+    name = db.Column(db.String)
+    budget = db.Column(db.Numeric(8, 2))
+    instructor_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
 
-def _get_instructors(testapp, **kwargs):
-    return testapp.get(url_for('api.get_instructors'), **kwargs)
+
+def _get_departments(testapp, **kwargs):
+    return testapp.get(url_for('api.get_departments'), **kwargs)
 
 
-def _get_instructor(testapp, id, **kwargs):
-    return testapp.get(url_for('api.get_instructor', id=id), **kwargs)
+def _get_department(testapp, id, **kwargs):
+    return testapp.get(url_for('api.get_department', id=id), **kwargs)
 
 
 @pytest.mark.usefixtures('db')
-class TestInstructors:
+class TestDepartments:
 
     def test_response_headers(self, testapp):
-        resp = _get_instructors(testapp)
+        resp = _get_departments(testapp)
         assert resp.headers['Content-Type'] == 'application/json'
 
-    def test_get_instructors(self, testapp):
-        resp = testapp.get(url_for('api.get_instructors'))
+    def test_get_departments(self, testapp):
+        resp = testapp.get(url_for('api.get_departments'))
         assert resp.status_code == 200
         assert resp.headers['Content-Type'] == 'application/json'
         assert len(resp.json['items']) is not None
 
-    def test_get_instructor(self, testapp):
+    def test_get_department(self, testapp):
         _register_user(testapp)
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
-        create_resp = testapp.post_json(url_for('api.create_instructor'), {
-            "first_name": "Kim",
-            "last_name": "Hyonny"
+        create_resp = testapp.post_json(url_for('api.create_department'), {
+            "name": "English",
+            "budget": 2000000,
+            "instructor_id": 1
         }, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
-        get_resp = _get_instructor(testapp, 5)
+        get_resp = _get_department(testapp, 3)
         assert get_resp.status_code == 200
-        assert get_resp.json['id'] == 5
-        assert get_resp.json['first_name'] is not None
-        assert get_resp.json['last_name'] is not None
+        assert get_resp.json['id'] is not None
+        assert get_resp.json['name'] is not None
+        assert get_resp.json['budget'] is not None
+        assert get_resp.json['instructor_id'] is not None
 
-    def test_create_instructor(self, testapp):
+    def test_create_department(self, testapp):
         _register_user(testapp)
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
-        create_resp = testapp.post_json(url_for('api.create_instructor'), {
-            "first_name": "Kim",
-            "last_name": "Hyonny"
+        create_resp = testapp.post_json(url_for('api.create_department'), {
+            "name": "English",
+            "budget": 2000000,
+            "instructor_id": 1
         }, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
         assert create_resp.status_code == 201
-        assert create_resp.json['id'] == 5
+        assert create_resp.json['id'] == 3
 
-    def test_update_instructor(self, testapp):
+    def test_update_department(self, testapp):
         _register_user(testapp)
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
 
-        testapp.post_json(url_for('api.create_instructor'), {
-            "first_name": "Kim",
-            "last_name": "Hyonny"
+        testapp.post_json(url_for('api.create_department'), {
+            "name": "English",
+            "budget": 2000000,
+            "instructor_id": 1
         }, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
 
-        update_resp = testapp.put_json(url_for('api.update_instructor', id=5), {
-            "first_name": "Tara",
-            "last_name": "Wong"
+        update_resp = testapp.put_json(url_for('api.update_department', id=3), {
+            "name": "Political Science",
+            "budget": 2000000,
+            "instructor_id": 2
         }, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
 
         assert update_resp.status_code == 204
-        get_resp = _get_instructor(testapp, 5)
-        assert get_resp.json['id'] == 5
-        assert get_resp.json['first_name'] == "Tara"
-        assert get_resp.json['last_name'] == "Wong"
+        get_resp = _get_department(testapp, 3)
+        print(get_resp)
+        assert get_resp.json['id'] == 3
+        assert get_resp.json['name'] == "Political Science"
+        assert get_resp.json['instructor_id'] == 2
 
-    def test_delete_instructors(self, testapp):
+    def test_delete_departments(self, testapp):
         _register_user(testapp)
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
 
-        testapp.post_json(url_for('api.create_instructor'), {
-            "first_name": "Tara",
-            "last_name": "Wong"
+        testapp.post_json(url_for('api.create_department'), {
+            "name": "English",
+            "budget": 2000000,
+            "instructor_id": 1
         }, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
 
-        delete_resp = testapp.delete(url_for('api.delete_instructor', id=5), headers={
+        delete_resp = testapp.delete(url_for('api.delete_department', id=3), headers={
             'Authorization': 'Bearer {}'.format(token)
         })
 
         assert delete_resp.status_code == 204
 
-    def test_empty_create_instructor(self, testapp):
+    def test_empty_create_department(self, testapp):
         _register_user(testapp)
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
 
-        create_resp = testapp.post_json(url_for('api.create_instructor'), {
+        create_resp = testapp.post_json(url_for('api.create_department'), {
         }, headers={
             'Authorization': 'Bearer {}'.format(token)
         }, expect_errors=True)
 
         assert create_resp.status_code == 400
 
-    def test_empty_update_instructor(self, testapp):
+    def test_empty_update_department(self, testapp):
         _register_user(testapp)
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
-        testapp.post_json(url_for('api.create_instructor'), {
-            "first_name": "Tara",
-            "last_name": "Wong"
+        testapp.post_json(url_for('api.create_department'), {
+            "name": "English",
+            "budget": 2000000,
+            "instructor_id": 1
         }, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
-        update_resp = testapp.put_json(url_for('api.update_instructor', id=5), {
+        update_resp = testapp.put_json(url_for('api.update_department', id=3), {
         }, headers={
             'Authorization': 'Bearer {}'.format(token)
         }, expect_errors=True)
         assert update_resp.status_code == 400
 
-    def test_404_instructor(self, testapp):
-        resp = _get_instructor(testapp, 422, expect_errors=True)
+    def test_404_department(self, testapp):
+        resp = _get_department(testapp, 422, expect_errors=True)
         assert resp.status_code == 404
