@@ -33,3 +33,13 @@ class TestAuthenticate:
             'Authorization': 'Bearer {}'.format(token)
         })
         assert del_resp.status_code == 204
+
+    def test_user_wrong_token(self, testapp):
+        _register_user(testapp)
+        testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
+        resp = testapp.post_json(url_for("api.get_token"))
+        token = str(resp.json['token'])
+        del_resp = testapp.delete(url_for('api.revoke_token'), headers={
+            'Authorization': 'Bearer {}'.format('nottherighttoken')
+        }, expect_errors=True)
+        assert del_resp.status_code == 401
