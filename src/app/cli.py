@@ -2,6 +2,7 @@ import sys
 import os
 import click
 from app.extensions import db
+
 from app.models import (
     Course,
     Student,
@@ -11,6 +12,7 @@ from app.models import (
     Instructor,
     OfficeAssignment
 )
+
 from flask import current_app
 from datetime import date
 from random import choice, shuffle, sample

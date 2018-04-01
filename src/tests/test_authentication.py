@@ -22,3 +22,14 @@ class TestAuthenticate:
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         assert resp.json['token'] is not None
+        assert resp.status_code == 200
+
+    def test_user_revoke_token(self, testapp):
+        _register_user(testapp)
+        testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
+        resp = testapp.post_json(url_for("api.get_token"))
+        token = str(resp.json['token'])
+        del_resp = testapp.delete(url_for('api.revoke_token'), headers={
+            'Authorization': 'Bearer {}'.format(token)
+        })
+        assert del_resp.status_code == 204

@@ -6,6 +6,15 @@ import pytest
 # def _get_courses(testapp, **kwargs):
 #     return testapp.get(url_for('api.get_courses'), **kwargs)
 
+# id = db.Column(db.Integer, primary_key=True)
+# title = db.Column(db.String)
+# credits = db.Column(db.Integer)
+# department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
+
+# department
+# enrollments
+# course_assignments
+
 
 # def _get_course(testapp, id, **kwargs):
 #     return testapp.get(url_for('api.get_course', id=id), **kwargs)
