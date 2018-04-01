@@ -28,7 +28,6 @@ class DevelopmentConfig(Config):
 
 
 class ProductionConfig(Config):
-    DATABASE_URI = ''
     PRODUCTION = True
 
 
