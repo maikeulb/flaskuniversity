@@ -16,6 +16,11 @@ from datetime import date
 from random import choice, shuffle, sample
 
 
+HERE = os.path.abspath(os.path.dirname(__file__))
+PROJECT_ROOT = os.path.join(HERE, os.pardir)
+TEST_PATH = os.path.join(PROJECT_ROOT, 'tests')
+
+
 def register(app):
     @app.cli.command("seed-db")
     def seed_db():
@@ -139,3 +144,9 @@ def register(app):
         for i in range(0, len(locations)):
             db.session.add(OfficeAssignment(location=locations[i],
                                             instructor_id=instructor_ids[i]))
+
+    @app.cli.command("test")
+    def test():
+        import pytest
+        rv = pytest.main([TEST_PATH, '--verbose'])
+        exit(rv)
