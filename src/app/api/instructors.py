@@ -16,7 +16,6 @@ def get_instructors():
 
 
 @api.route('/instructors/<int:id>', methods=['GET'])
-@token_auth.login_required
 def get_instructor(id):
     instructor = Instructor.query.get_or_404(id)
     return jsonify(instructor.to_dict())
@@ -26,7 +25,7 @@ def get_instructor(id):
 @token_auth.login_required
 def create_instructor():
     data = request.get_json() or {}
-    if 'first_name' not in data or 'last_name' not in data or 'enrollment_date' not in data:
+    if 'first_name' not in data or 'last_name' not in data:
         return bad_request('must include first_name, last_name and \
                            enrollment_date fields')
     instructor = Instructor()
@@ -45,7 +44,7 @@ def create_instructor():
 def update_instructor(id):
     instructor = Instructor.query.get_or_404(id)
     data = request.get_json() or {}
-    if 'first_name' not in data or 'last_name' not in data or 'enrollment_date' not in data:
+    if 'first_name' not in data or 'last_name' not in data:
         return bad_request('must include first_name, last_name and \
                            enrollment_date fields')
     instructor.from_dict(data)
