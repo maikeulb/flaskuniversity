@@ -33,6 +33,16 @@ def testapp(app):
 
 
 @pytest.fixture
+def student(db):
+    student = Student(first_name='demo',
+                      last_name='demo',
+                      enrollment_date=date(2011, 1, 1))
+    db.session.add(student)
+    db.session.commit()
+    return student
+
+
+@pytest.fixture
 def db(app):
     _db.app = app
     with app.app_context():

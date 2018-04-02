@@ -11,6 +11,13 @@ def _register_user(testapp, **kwargs):
     }, **kwargs)
 
 
+def _register_student(testapp, student, **kwargs):
+    return testapp.post_json(url_for("api.create_student"), {
+        "first_name": student.first_name,
+        "last_name": student.last_name,
+    }, **kwargs)
+
+
 def _get_students(testapp, **kwargs):
     return testapp.get(url_for('api.get_students'), **kwargs)
 
@@ -39,33 +46,25 @@ class TestStudents:
         assert resp.json['first_name'] is not None
         assert resp.json['last_name'] is not None
 
-    def test_create_student(self, testapp):
+    def test_create_student(self, testapp, student):
         _register_user(testapp)
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
-        create_resp = testapp.post_json(url_for('api.create_student'), {
-            "first_name": "Jack",
-            "last_name": "Smith"
-        }, headers={
+        create_resp = _register_student(testapp, student, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
         assert create_resp.status_code == 201
-        assert create_resp.json['id'] == 15
+        # assert create_resp.json['id'] == 15
 
     def test_update_student(self, testapp):
         _register_user(testapp)
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
-
-        testapp.post_json(url_for('api.create_student'), {
-            "first_name": "Jack",
-            "last_name": "Smith"
-        }, headers={
+        create_resp = _register_student(testapp, student, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
-
         update_resp = testapp.put_json(url_for('api.update_student', id=15), {
             "first_name": "Kyle",
             "last_name": "Reese"
@@ -79,16 +78,13 @@ class TestStudents:
         assert get_resp.json['first_name'] == "Kyle"
         assert get_resp.json['last_name'] == "Reese"
 
-    def test_delete_students(self, testapp):
+    def test_delete_students(self, testapp, student):
         _register_user(testapp)
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
 
-        testapp.post_json(url_for('api.create_student'), {
-            "first_name": "Jack",
-            "last_name": "Smith"
-        }, headers={
+        create_resp = _register_student(testapp, student, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
 
@@ -116,10 +112,7 @@ class TestStudents:
         testapp.authorization = ('Basic', ('demo', 'P@ssw0rd!'))
         resp = testapp.post_json(url_for("api.get_token"))
         token = str(resp.json['token'])
-        testapp.post_json(url_for('api.create_student'), {
-            "first_name": "Jack",
-            "last_name": "Smith"
-        }, headers={
+        create_resp = _register_student(testapp, student, headers={
             'Authorization': 'Bearer {}'.format(token)
         })
         update_resp = testapp.put_json(url_for('api.update_student', id=15), {
