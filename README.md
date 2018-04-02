@@ -61,10 +61,10 @@ Endpoints
 | `POST`     | `/api/tokens`                         | `Retrieve Token`                          |
 | `DELETE`   | `/api/tokens`                         | `Revoke token `                           |
 
-Sample Response
+Sample Usage
 ---------------
-`http post localhost:5000/api/users username=demouser password=P@ssw0rd!
-email=demo@example.com`
+`http post localhost:5000/api/users username=user password=pass
+email=user@example.com`
 ```
 {
     "_links": {
@@ -79,25 +79,6 @@ email=demo@example.com`
 ```
 {
     "token": "sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz"
-}
-```
-
-`http --auth user:pass post localhost:5000/api/tokens` (http basic authentication)
-```
-{
-    "token": "sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz"
-}
-```
-`http localhost:5000/api/courses/302` (authentication not required for get requests)
-```
-{
-    "_links": {
-        "self": "/api/courses/302"
-    }, 
-    "credits": 3, 
-    "department_id": 2, 
-    "id": 302, 
-    "title": "finite element analysis ii"
 }
 ```
 
@@ -124,9 +105,9 @@ docker-compose up
 Go to http://localhost:5000 and visit one of the above endpoints
 ```
 
-Otherwise, go to config.py and point the PostgreSQL and Elasticsearch variables
-so that they point to your server URI's, set the FLASK_APP env variable to
-landmarks.py, and pip install the requirements. 
+Otherwise, go to `config.py` and point the PostgreSQL variable
+so that they point to your server URI, set the `FLASK_APP` env variable to
+flaskuniversity.py, and pip install the requirements. 
 
 After all that has been taken care of,
 ```
@@ -138,5 +119,5 @@ Go to http://localhost:5000 and visit one of the above endpoints
 
 TODO
 ----
-Add course assignment
-Add instructor assignment
+* Add course assignment
+* Add instructor assignment
