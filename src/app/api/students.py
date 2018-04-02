@@ -26,8 +26,7 @@ def get_student(id):
 def create_student():
     data = request.get_json() or {}
     if 'first_name' not in data or 'last_name' not in data:
-        return bad_request('must include first_name, last_name and \
-                           enrollment_date fields')
+        return bad_request('must include first_name, last_name and enrollment_date fields')
     student = Student()
     student.from_dict(data)
     db.session.add(student)
@@ -44,8 +43,7 @@ def update_student(id):
     student = Student.query.get_or_404(id)
     data = request.get_json() or {}
     if 'first_name' not in data or 'last_name' not in data:
-        return bad_request('must include first_name, last_name and \
-                           enrollment_date fields')
+        return bad_request('must include first_name, last_name and enrollment_date fields')
     student.from_dict(data)
     db.session.commit()
     return '', 204

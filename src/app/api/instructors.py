@@ -26,8 +26,7 @@ def get_instructor(id):
 def create_instructor():
     data = request.get_json() or {}
     if 'first_name' not in data or 'last_name' not in data:
-        return bad_request('must include first_name, last_name and \
-                           enrollment_date fields')
+        return bad_request('must include first_name, last_name and enrollment_date fields')
     instructor = Instructor()
     instructor.from_dict(data)
     db.session.add(instructor)
@@ -45,8 +44,7 @@ def update_instructor(id):
     instructor = Instructor.query.get_or_404(id)
     data = request.get_json() or {}
     if 'first_name' not in data or 'last_name' not in data:
-        return bad_request('must include first_name, last_name and \
-                           enrollment_date fields')
+        return bad_request('must include first_name, last_name and enrollment_date fields')
     instructor.from_dict(data)
     db.session.commit()
     return '', 204

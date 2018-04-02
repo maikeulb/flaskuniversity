@@ -26,8 +26,7 @@ def get_department(id):
 def create_department():
     data = request.get_json() or {}
     if 'name' not in data or 'budget' not in data or 'budget' not in data or 'instructor_id' not in data:
-        return bad_request('must include first_name, last_name and \
-                           enrollment_date fields')
+        return bad_request('must include first_name, last_name and enrollment_date fields')
     department = Department()
     department.from_dict(data)
     db.session.add(department)
@@ -45,8 +44,7 @@ def update_department(id):
     department = Department.query.get_or_404(id)
     data = request.get_json() or {}
     if 'name' not in data or 'budget' not in data or 'budget' not in data or 'instructor_id' not in data:
-        return bad_request('must include first_name, last_name and \
-                           enrollment_date fields')
+        return bad_request('must include first_name, last_name and enrollment_date fields')
     department.from_dict(data)
     db.session.commit()
     return '', 204

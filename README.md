@@ -63,7 +63,57 @@ Endpoints
 
 Sample Response
 ---------------
-[TODO]
+`http post localhost:5000/api/users username=demouser password=P@ssw0rd!
+email=demo@example.com`
+```
+{
+    "_links": {
+        "self": "/api/users/4"
+    }, 
+    "id": 4, 
+    "username": "user"
+}
+```
+
+`http --auth user:pass post localhost:5000/api/tokens` (http basic authentication)
+```
+{
+    "token": "sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz"
+}
+```
+
+`http --auth user:pass post localhost:5000/api/tokens` (http basic authentication)
+```
+{
+    "token": "sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz"
+}
+```
+`http localhost:5000/api/courses/302` (authentication not required for get requests)
+```
+{
+    "_links": {
+        "self": "/api/courses/302"
+    }, 
+    "credits": 3, 
+    "department_id": 2, 
+    "id": 302, 
+    "title": "finite element analysis ii"
+}
+```
+
+`http --auth-type=jwt --auth="sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz" post localhost:5000/api/courses id:=333 credits:=3 department_id:=2 title="mechanical vibrations"`
+
+```
+{
+    "_links": {
+        "self": "/api/courses/333"
+    }, 
+    "credits": 3, 
+    "department_id": 2, 
+    "id": 333, 
+    "title": "mechanical vibrations"
+}
+```
 
 Run
 ---
