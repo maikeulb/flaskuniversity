@@ -105,9 +105,9 @@ docker-compose up
 Go to http://localhost:5000 and visit one of the above endpoints
 ```
 
-Otherwise, go to `config.py` and point the PostgreSQL variable
-so that they point to your server URI, set the `FLASK_APP` env variable to
-flaskuniversity.py, and pip install the requirements. 
+Otherwise, go to `config.py` and point the PostgreSQL variable to your server
+URI, set the `FLASK_APP` env variable to flaskuniversity.py, and pip install
+the requirements. 
 
 After all that has been taken care of,
 ```
