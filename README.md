@@ -119,5 +119,5 @@ Go to http://localhost:5000 and visit one of the above endpoints
 
 TODO
 ----
-* Add course assignment
-* Add instructor assignment
+Add course assignment  
+Add instructor assignment
