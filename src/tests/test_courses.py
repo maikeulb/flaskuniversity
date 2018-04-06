@@ -74,7 +74,6 @@ class TestCourses:
         delete_resp = testapp.delete(url_for('api.delete_course', id=264), headers={
             'Authorization': 'Bearer {}'.format(token)
         })
-
         assert delete_resp.status_code == 204
 
     def test_empty_create_course(self, testapp, department, course, token):
