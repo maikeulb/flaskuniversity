@@ -1,6 +1,6 @@
+import pytest
 from flask import url_for
 from datetime import datetime, date
-import pytest
 
 
 def _register_department(testapp, **kwargs):

@@ -2,7 +2,9 @@
 
 Restful API backend for Microsoft's Contoso University sample application, but
 written in Flask. Features include token-based authentication system (using
-JWTs + Authorization headers), and CORS. 
+JWTs + Authorization headers), and CORS. The majority of it is complete but
+I still have to add flask-marshmallow (for serialization/validation) and a few
+more resources.
 
 Technology
 ----------
@@ -120,5 +122,6 @@ Go to http://localhost:5000 and visit one of the above endpoints
 
 TODO
 ----
-Add course assignment  
-Add instructor assignment
+Add new read-only resources for course_assignment, enrollment, and office_assignment
+(read-only)
+Add flask-marshmallow 
