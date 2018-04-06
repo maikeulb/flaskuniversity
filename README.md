@@ -58,8 +58,8 @@ Endpoints
 ### Auth
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
-| `POST`     | `/api/tokens`                         | `Retrieve Token`                          |
-| `DELETE`   | `/api/tokens`                         | `Revoke token `                           |
+| `POST`     | `/auth/tokens`                         | `Retrieve Token`                          |
+| `DELETE`   | `/auth/tokens`                         | `Revoke token `                           |
 
 Sample Usage
 ---------------
@@ -75,7 +75,7 @@ email=user@example.com`
 }
 ```
 
-`http --auth user:pass post localhost:5000/api/tokens` (http basic authentication)
+`http --auth user:pass post localhost:5000/auth/tokens` (http basic authentication)
 ```
 {
     "token": "sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz"
@@ -119,5 +119,6 @@ Go to http://localhost:5000 and visit one of the above endpoints
 
 TODO
 ----
+CORS  
 Add course assignment  
 Add instructor assignment

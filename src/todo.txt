@@ -1,3 +1,4 @@
 add nested resources (maybe)
-  add search/filtering/etc
-  remove snake_casing
+add search/filtering/ordering
+add serializers(marshmallow)
+cors
