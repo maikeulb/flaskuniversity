@@ -1,5 +1,6 @@
 import config
 import os
+from flask_cors import CORS
 from flask import (
     Flask,
     render_template,
@@ -28,6 +29,7 @@ def register_extensions(app):
     db.init_app(app)
     login.init_app(app)
     migrate.init_app(app, db)
+    CORS(app)
     return None
 
 

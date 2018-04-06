@@ -1,7 +1,8 @@
 # Flask University
 
-Restful API backend for Microsoft's Contoso University sample application, but 
-written in Flask and with token-based authentication system (using JWTs). 
+Restful API backend for Microsoft's Contoso University sample application, but
+written in Flask. Features include token-based authentication system (using
+JWTs + Authorization headers), and CORS. 
 
 Technology
 ----------
@@ -119,6 +120,5 @@ Go to http://localhost:5000 and visit one of the above endpoints
 
 TODO
 ----
-CORS  
 Add course assignment  
 Add instructor assignment
