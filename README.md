@@ -2,9 +2,11 @@
 
 Restful API backend for Microsoft's Contoso University sample application, but
 written in Flask. Features include token-based authentication system (using
-JWTs + Authorization headers), and CORS.  There are two branches: `master` uses
-flask with basic serialization/deserialization and `marshmallow` (in-progress)
-incorporates marshmallow.
+JWTs + Authorization headers), and CORS. There are two branches: `master` and
+`marshmallow` (in-progress). The `master` branch has basic
+serialization/deserialization with minimal validation (only for required
+fields). I created the `marshmallow` branch to facilitate writing more complex
+serializations and more complete validations.
 
 Technology
 ----------
@@ -61,8 +63,8 @@ Endpoints
 ### Auth
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
-| `POST`     | `/auth/tokens`                         | `Retrieve Token`                          |
-| `DELETE`   | `/auth/tokens`                         | `Revoke token `                           |
+| `POST`     | `/auth/tokens`                        | `Retrieve Token`                          |
+| `DELETE`   | `/auth/tokens`                        | `Revoke token `                           |
 
 Sample Usage
 ---------------
@@ -85,17 +87,33 @@ email=user@example.com`
 }
 ```
 
-`http --auth-type=jwt --auth="sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz" post localhost:5000/api/courses id:=333 credits:=3 department_id:=2 title="mechanical vibrations"`
+`http --auth-type=jwt --auth="sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz" post localhost:5000/api/instructors first_name:='sanjay' last_name='govindjee' course_assignments:=[201, 302] office_assignments='davis hall'
 
 ```
 {
     "_links": {
-        "self": "/api/courses/333"
+        "self": "/api/instructors/10"
     }, 
-    "credits": 3, 
-    "department_id": 2, 
-    "id": 333, 
-    "title": "mechanical vibrations"
+    "course_assignments": [
+        {
+            "course_id": 201, 
+            "instructor_id": 10
+        }, 
+        {
+            "course_id": 302, 
+            "instructor_id": 10
+        }
+    ], 
+    "first_name": "sanjay", 
+    "hire_date": null, 
+    "id": 10, 
+    "last_name": "govindjee", 
+    "office_assignment": [
+        {
+            "instructor_id": 10, 
+            "location": "davis hall"
+        }
+    ]
 }
 ```
 
@@ -122,4 +140,4 @@ Go to http://localhost:5000 and visit one of the above endpoints
 
 TODO
 ----
-Add flask-marshmallow 
+Finish flask-marshmallow 

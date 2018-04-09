@@ -22,7 +22,7 @@ def get_instructor(id):
 
 
 @api.route('/instructors', methods=['POST'])
-# @token_auth.login_required
+@token_auth.login_required
 def create_instructor():
     data = request.get_json() or {}
     if 'first_name' not in data or 'last_name' not in data:
