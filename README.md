@@ -3,9 +3,9 @@
 Restful API backend for Microsoft's Contoso University sample application, but
 written in Flask. Features include token-based authentication system (using
 JWTs + Authorization headers), and CORS. There are two branches: `master` and
-`marshmallow` (in-progress). The `master` branch has basic
-serialization/deserialization with minimal validation (only for required
-fields). I created the `marshmallow` branch to facilitate writing more complex
+`marshmallow` (in-progress). The `master` branch implements simple
+serializations and minimal validation (e.g. only checking for null values for
+required fields). The `marshmallow` branch will implement more complex
 serializations and more complete validations.
 
 Technology
@@ -105,7 +105,6 @@ email=user@example.com`
         }
     ], 
     "first_name": "sanjay", 
-    "hire_date": null, 
     "id": 10, 
     "last_name": "govindjee", 
     "office_assignment": [
