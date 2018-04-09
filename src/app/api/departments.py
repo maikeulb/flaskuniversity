@@ -1,6 +1,7 @@
 from flask import jsonify, request, url_for
 from app.extensions import db
 from app.models import Department
+from app.serializers import department_schema, departments_schema
 from app.api import api
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -8,17 +9,16 @@ from app.api.auth import token_auth
 
 @api.route('/departments', methods=['GET'])
 def get_departments():
-    page = request.args.get('page', 1, type=int)
-    per_page = min(request.args.get('per_page', 10, type=int), 100)
-    data = Department.to_collection_dict(Department.query, page, per_page,
-                                         'api.get_departments')
-    return jsonify(data)
+    departments = Department.query.all()
+    result = departments_schema.dump(departments)
+    return jsonify(result.data)
 
 
 @api.route('/departments/<int:id>', methods=['GET'])
 def get_department(id):
     department = Department.query.get_or_404(id)
-    return jsonify(department.to_dict())
+    result = department_schema.dump(department)
+    return jsonify(result.data)
 
 
 @api.route('/departments', methods=['POST'])
@@ -31,7 +31,8 @@ def create_department():
     department.from_dict(data)
     db.session.add(department)
     db.session.commit()
-    response = jsonify(department.to_dict())
+    result = department_schema.dump(department)
+    response = jsonify(result.data)
     response.status_code = 201
     response.headers['Location'] = url_for(
         'api.get_department', id=department.id)

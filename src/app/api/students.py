@@ -1,6 +1,7 @@
 from flask import jsonify, request, url_for
 from app.extensions import db
 from app.models import Student
+from app.serializers import student_schema, students_schema
 from app.api import api
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -8,17 +9,16 @@ from app.api.auth import token_auth
 
 @api.route('/students', methods=['GET'])
 def get_students():
-    page = request.args.get('page', 1, type=int)
-    per_page = min(request.args.get('per_page', 10, type=int), 100)
-    data = Student.to_collection_dict(Student.query, page, per_page,
-                                      'api.get_students')
-    return jsonify(data)
+    students = Student.query.all()
+    result = students_schema.dump(students)
+    return jsonify(result.data)
 
 
 @api.route('/students/<int:id>', methods=['GET'])
 def get_student(id):
     student = Student.query.get_or_404(id)
-    return jsonify(student.to_dict())
+    result = student_schema.dump(student)
+    return jsonify(result.data)
 
 
 @api.route('/students', methods=['POST'])
@@ -31,7 +31,8 @@ def create_student():
     student.from_dict(data)
     db.session.add(student)
     db.session.commit()
-    response = jsonify(student.to_dict())
+    result = student_schema.dump(student)
+    response = jsonify(result.data)
     response.status_code = 201
     response.headers['Location'] = url_for('api.get_student', id=student.id)
     return response

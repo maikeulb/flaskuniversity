@@ -12,6 +12,7 @@ from app.extensions import (
     bcrypt,
     db,
     login,
+    ma,
     migrate,
 )
 
@@ -26,6 +27,7 @@ def create_app(config_class):
 
 def register_extensions(app):
     bcrypt.init_app(app)
+    ma.init_app(app)
     db.init_app(app)
     login.init_app(app)
     migrate.init_app(app, db)

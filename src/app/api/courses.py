@@ -1,6 +1,7 @@
 from flask import jsonify, request, url_for
 from app.extensions import db
 from app.models import Course
+from app.serializers import course_schema, courses_schema
 from app.api import api
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -8,17 +9,16 @@ from app.api.auth import token_auth
 
 @api.route('/courses', methods=['GET'])
 def get_courses():
-    page = request.args.get('page', 1, type=int)
-    per_page = min(request.args.get('per_page', 10, type=int), 100)
-    data = Course.to_collection_dict(Course.query, page, per_page,
-                                     'api.get_courses')
-    return jsonify(data)
+    courses = Course.query.all()
+    result = courses_schema.dump(courses)
+    return jsonify(result.data)
 
 
 @api.route('/courses/<int:id>', methods=['GET'])
 def get_course(id):
     course = Course.query.get_or_404(id)
-    return jsonify(course.to_dict())
+    result = course_schema.dump(course)
+    return jsonify(result.data)
 
 
 @api.route('/courses', methods=['POST'])
@@ -31,7 +31,8 @@ def create_course():
     course.from_dict(data)
     db.session.add(course)
     db.session.commit()
-    response = jsonify(course.to_dict())
+    result = course_schema.dump(course)
+    response = jsonify(result.data)
     response.status_code = 201
     response.headers['Location'] = url_for('api.get_course', id=course.id)
     return response

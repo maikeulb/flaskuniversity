@@ -1,6 +1,7 @@
 from flask import jsonify, request, url_for
 from app.extensions import db
 from app.models import Instructor, OfficeAssignment
+from app.serializers import instructor_schema, instructors_schema
 from app.api import api
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -8,17 +9,16 @@ from app.api.auth import token_auth
 
 @api.route('/instructors', methods=['GET'])
 def get_instructors():
-    page = request.args.get('page', 1, type=int)
-    per_page = min(request.args.get('per_page', 10, type=int), 100)
-    data = Instructor.to_collection_dict(Instructor.query, page, per_page,
-                                         'api.get_instructors')
-    return jsonify(data)
+    instructors = Instructor.query.all()
+    result = instructors_schema.dump(instructors)
+    return jsonify(result.data)
 
 
 @api.route('/instructors/<int:id>', methods=['GET'])
 def get_instructor(id):
     instructor = Instructor.query.get_or_404(id)
-    return jsonify(instructor.to_dict())
+    result = instructor_schema.dump(instructor)
+    return jsonify(result.data)
 
 
 @api.route('/instructors', methods=['POST'])
@@ -42,7 +42,8 @@ def create_instructor():
             instructor.CourseAssignments.add(course_to_add)
     db.session.add(instructor)
     db.session.commit()
-    response = jsonify(instructor.to_dict())
+    result = instructor_schema.dump(instructor)
+    response = jsonify(result.data)
     response.status_code = 201
     response.headers['Location'] = url_for(
         'api.get_department', id=instructor.id)

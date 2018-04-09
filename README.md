@@ -18,37 +18,37 @@ Endpoints
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
 | `GET`      | `/api/courses`                        | `Retrieve all courses`                    |
-| `GET`      | `/api/courses/{bid}`                  | `Retrieve course`                         |
+| `GET`      | `/api/courses/{id}`                  | `Retrieve course`                         |
 | `POST`     | `/api/courses`                        | `Create course`                           |
-| `PUT`      | `/api/courses/{bid}`                  | `Update course`                           |
-| `DELETE`   | `/api/courses/{bid}          `        | `Delete course`                           |
+| `PUT`      | `/api/courses/{id}`                  | `Update course`                           |
+| `DELETE`   | `/api/courses/{id}          `        | `Delete course`                           |
 
 ### Students
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
 | `GET`      | `/api/students`                       | `Retrieve all students`                   |
-| `GET`      | `/api/students/{bid}`                 | `Retrieve student`                        |
+| `GET`      | `/api/students/{id}`                 | `Retrieve student`                        |
 | `POST`     | `/api/students`                       | `Create student`                          |
-| `PUT`      | `/api/students/{bid}`                 | `Update student`                          |
-| `DELETE`   | `/api/students/{bid}`                 | `Delete student`                          |
+| `PUT`      | `/api/students/{id}`                 | `Update student`                          |
+| `DELETE`   | `/api/students/{id}`                 | `Delete student`                          |
 
 ### Instructors
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
 | `GET`      | `/api/instructors`                    | `Retrieve all instructors`                |
-| `GET`      | `/api/instructors/{bid}`              | `Retrieve instructor`                     |
+| `GET`      | `/api/instructors/{id}`              | `Retrieve instructor`                     |
 | `POST`     | `/api/instructors`                    | `Create instructor`                       |
-| `PUT`      | `/api/instructors/{bid}`              | `Update instructor`                       |
-| `DELETE`   | `/api/instructors/{bid}`              | `Delete instructor`                       |
+| `PUT`      | `/api/instructors/{id}`              | `Update instructor`                       |
+| `DELETE`   | `/api/instructors/{id}`              | `Delete instructor`                       |
 
 ### Departments
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
 | `GET`      | `/api/departments`                    | `Retrieve all departments`                |
-| `GET`      | `/api/departments/{bid}`              | `Retrieve department`                     |
+| `GET`      | `/api/departments/{id}`              | `Retrieve department`                     |
 | `POST`     | `/api/departments`                    | `Create department`                       |
-| `PUT`      | `/api/departments/{bid}`              | `Update department`                       |
-| `DELETE`   | `/api/departments/{bid}`              | `Delete department`                       |
+| `PUT`      | `/api/departments/{id}`              | `Update department`                       |
+| `DELETE`   | `/api/departments/{id}`              | `Delete department`                       |
 
 ### Users
 | Method     | URI                                   | Action                                    |
