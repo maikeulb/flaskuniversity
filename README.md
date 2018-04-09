@@ -20,37 +20,37 @@ Endpoints
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
 | `GET`      | `/api/courses`                        | `Retrieve all courses`                    |
-| `GET`      | `/api/courses/{bid}`                  | `Retrieve course`                         |
+| `GET`      | `/api/courses/{id}`                  | `Retrieve course`                         |
 | `POST`     | `/api/courses`                        | `Create course`                           |
-| `PUT`      | `/api/courses/{bid}`                  | `Update course`                           |
-| `DELETE`   | `/api/courses/{bid}          `        | `Delete course`                           |
+| `PUT`      | `/api/courses/{id}`                  | `Update course`                           |
+| `DELETE`   | `/api/courses/{id}          `        | `Delete course`                           |
 
 ### Students
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
 | `GET`      | `/api/students`                       | `Retrieve all students`                   |
-| `GET`      | `/api/students/{bid}`                 | `Retrieve student`                        |
+| `GET`      | `/api/students/{id}`                 | `Retrieve student`                        |
 | `POST`     | `/api/students`                       | `Create student`                          |
-| `PUT`      | `/api/students/{bid}`                 | `Update student`                          |
-| `DELETE`   | `/api/students/{bid}`                 | `Delete student`                          |
+| `PUT`      | `/api/students/{id}`                 | `Update student`                          |
+| `DELETE`   | `/api/students/{id}`                 | `Delete student`                          |
 
 ### Instructors
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
 | `GET`      | `/api/instructors`                    | `Retrieve all instructors`                |
-| `GET`      | `/api/instructors/{bid}`              | `Retrieve instructor`                     |
+| `GET`      | `/api/instructors/{id}`              | `Retrieve instructor`                     |
 | `POST`     | `/api/instructors`                    | `Create instructor`                       |
-| `PUT`      | `/api/instructors/{bid}`              | `Update instructor`                       |
-| `DELETE`   | `/api/instructors/{bid}`              | `Delete instructor`                       |
+| `PUT`      | `/api/instructors/{id}`              | `Update instructor`                       |
+| `DELETE`   | `/api/instructors/{id}`              | `Delete instructor`                       |
 
 ### Departments
 | Method     | URI                                   | Action                                    |
 |------------|---------------------------------------|-------------------------------------------|
 | `GET`      | `/api/departments`                    | `Retrieve all departments`                |
-| `GET`      | `/api/departments/{bid}`              | `Retrieve department`                     |
+| `GET`      | `/api/departments/{id}`              | `Retrieve department`                     |
 | `POST`     | `/api/departments`                    | `Create department`                       |
-| `PUT`      | `/api/departments/{bid}`              | `Update department`                       |
-| `DELETE`   | `/api/departments/{bid}`              | `Delete department`                       |
+| `PUT`      | `/api/departments/{id}`              | `Update department`                       |
+| `DELETE`   | `/api/departments/{id}`              | `Delete department`                       |
 
 ### Users
 | Method     | URI                                   | Action                                    |
@@ -125,11 +125,12 @@ docker-compose up
 Go to http://localhost:5000 and visit one of the above endpoints
 ```
 
-Otherwise, go to `config.py` and point the PostgreSQL variable to your server
-URI, set the `FLASK_APP` env variable to flaskuniversity.py, and pip install
-the requirements. 
+Alternatively, create a database named 'flaskuniversity', open `config.py` and
+point the database URI to your server server, set the `FLASK_APP` env variable
+to flaskuniversity.py, and install the python dependencies (e.g. `pip install
+-r requirements.txt`).
 
-After all that has been taken care of,
+`cd` into `./src` (if you are not already) and run the following:
 ```
 flask db upgrade
 flask seed-db
