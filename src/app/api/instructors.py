@@ -1,6 +1,6 @@
 from flask import jsonify, request, url_for
 from app.extensions import db
-from app.models import Instructor, OfficeAssignment
+from app.models import Instructor, OfficeAssignment, CourseAssignment, Course
 from app.api import api
 from app.api.errors import bad_request
 from app.api.auth import token_auth
@@ -22,24 +22,29 @@ def get_instructor(id):
 
 
 @api.route('/instructors', methods=['POST'])
-@token_auth.login_required
+# @token_auth.login_required
 def create_instructor():
     data = request.get_json() or {}
     if 'first_name' not in data or 'last_name' not in data:
         return bad_request('must include first_name and last_name')
     instructor = Instructor()
     instructor.from_dict(data)
-    # if (instructor.office_assignment != None):
-    # office_assignment = OfficeAssignment()
-    # office_assignment.instructor_id = instructor.id  # is this not zero?
-    # office_assignment.location = instructor.office_assignment
-    # instructor.office_assignment = office_assignment
-    if (instructor.course_assignments != None):
-        for course in instructor.course_assignments:
-            course_to_add = CourseAssignment()
-            course_to_add.instructor_id = instructor.id
-            course_to_add.course_id = course.id
-            instructor.CourseAssignments.add(course_to_add)
+    print(data)
+    if 'office_assignment' in data:
+        office_assignment = OfficeAssignment()
+        office_assignment.instructor = instructor
+        office_assignment.location = data['office_assignment']
+        instructor.office_assignment = [office_assignment]
+    if 'course_assignments' in data:
+        course_assignments = []
+        for course in data['course_assignments']:
+            course_assignment = CourseAssignment()
+            course_assignment.instructor = instructor
+            exist_course = Course.query.get(course)
+            if exist_course:
+                course_assignment.course = exist_course
+                course_assignments.append(course_assignment)
+        instructor.course_assignments = course_assignments
     db.session.add(instructor)
     db.session.commit()
     response = jsonify(instructor.to_dict())

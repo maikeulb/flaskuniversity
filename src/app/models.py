@@ -124,6 +124,10 @@ class Instructor(PaginatedAPIMixin, db.Model):
             'first_name': self.first_name,
             'last_name': self.last_name,
             'hire_date': self.hire_date,
+            'office_assignment': [oa.to_dict() for oa in
+                                  self.office_assignment],
+            'course_assignments': [ca.to_dict() for ca in
+                                   self.course_assignments],
             '_links': {
                 'self': url_for('api.get_instructor', id=self.id),
             }
@@ -156,10 +160,7 @@ class CourseAssignment(PaginatedAPIMixin, db.Model):
     def to_dict(self):
         data = {
             'instructor_id': self.instructor_id,
-            'course_id': self.course_id,
-            '_links': {
-                'self': url_for('api.get_course_assignment', id=self.id),
-            }
+            'course_id': self.course_id
         }
         return data
 
@@ -181,12 +182,8 @@ class OfficeAssignment(PaginatedAPIMixin, db.Model):
 
     def to_dict(self):
         data = {
-            'id': self.id,
             'location': self.location,
-            'instructor_id': self.instructor_id,
-            '_links': {
-                'self': url_for('api.get_office_assignment', id=self.id),
-            }
+            'instructor_id': self.instructor_id
         }
         return data
 
