@@ -1,4 +1,0 @@
-add nested resources (maybe)
-add search/filtering/ordering
-add serializers(marshmallow)
-cors
