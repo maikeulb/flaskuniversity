@@ -20,7 +20,7 @@ flake8-docstrings==1.1.0
 flake8-isort==2.3
 flake8-polyfill==1.0.2
 flake8-quotes==0.13.0
-Flask==0.12.2
+Flask==1.0
 Flask-Bcrypt==0.7.1
 Flask-Cors==3.0.3
 Flask-HTTPAuth==3.2.3
