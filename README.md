@@ -87,7 +87,7 @@ email=user@example.com`
 }
 ```
 
-`http --auth-type=jwt --auth="sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz" post localhost:5000/api/instructors first_name:='sanjay' last_name='govindjee' course_assignments:=[201, 302] office_assignments='davis hall'
+`http --auth-type=jwt --auth="sUboXR2NkQRDhyJ1QoyQm4kjBfi8EAoz" post localhost:5000/api/instructors first_name:='sanjay' last_name='govindjee' course_assignments:=[201, 302] office_assignments='davis hall'`
 
 ```
 {
