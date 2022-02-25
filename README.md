@@ -1,6 +1,6 @@
 # Flask University
 
-Restful API backend for Microsoft's Contoso University sample application, but
+Restful API backend for Microsoft's Contoso University sample application,
 written in Flask. Features include token-based authentication system (using
 JWTs + Authorization headers), and CORS. There are two branches: `master` and
 `marshmallow` (in-progress). The `master` branch implements simple
@@ -140,7 +140,3 @@ flask seed-db
 flask run
 Go to http://localhost:5000 and visit one of the above endpoints
 ```
-
-TODO
-----
-Finish flask-marshmallow 
